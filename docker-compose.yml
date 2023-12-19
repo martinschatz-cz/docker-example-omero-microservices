@@ -11,7 +11,7 @@ services:
     networks:
       - omero
     volumes:
-      - "database:/var/lib/postgresql/data"
+      - "./database:/var/lib/postgresql/data"
 
   redis:
     image: redis:6.0.8
@@ -36,8 +36,8 @@ services:
       - "4063:4063"
       - "4064:4064"
     volumes:
-      - "omero:/OMERO"
-      - "omeroscripts:/opt/omero/server/OMERO.server/lib/scripts"
+      - "./omero:/OMERO"
+      - "./omeroscripts:/opt/omero/server/OMERO.server/lib/scripts"
 
   omerozarr:
     image: openmicroscopy/omero-ms-zarr:0.1.6
@@ -52,7 +52,7 @@ services:
     networks:
       - omero
     volumes:
-      - "omero:/OMERO"
+      - "./omero:/OMERO"
 
   omeroweb:
     # This container uses the tag for the latest web release of OMERO 5
@@ -79,7 +79,7 @@ services:
     networks:
       - omero
     volumes:
-      - "$PWD/thumbnail/config.yml:/opt/ms/conf/config.yaml:ro"
+      - "./thumbnail/config.yml:/opt/ms/conf/config.yaml:ro"
 
   omeroimageregion:
     # omero-ms-image-region 0.5.2
@@ -94,10 +94,10 @@ services:
     networks:
       - omero
     volumes:
-      - "$PWD/imageregion/config.yml:/opt/ms/conf/config.yaml:ro"
-#      - "$PWD/imageregion/logback-debug.xml:/opt/ms/conf/logback-debug.xml:ro"
-      - "omero:/OMERO"
-      - "omeroscripts:/opt/omero/server/OMERO.server/lib/scripts"
+      - "./imageregion/config.yml:/opt/ms/conf/config.yaml:ro"
+#      - "./imageregion/logback-debug.xml:/opt/ms/conf/logback-debug.xml:ro"
+      - "./omero:/OMERO"
+      - "./omeroscripts:/opt/omero/server/OMERO.server/lib/scripts"
 
   caddy:
     image: caddy:2.1.1
@@ -107,12 +107,12 @@ services:
     ports:
       - "10080:80"
     volumes:
-      - "$PWD/caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
 
 networks:
   omero:
 
-volumes:
-  database:
+#volumes:
+  #database:
   omero:
   omeroscripts:
