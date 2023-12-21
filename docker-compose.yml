@@ -79,7 +79,7 @@ services:
     networks:
       - omero
     volumes:
-      - "$PWD/thumbnail/config.yml:/opt/ms/conf/config.yaml:ro"
+      - "./thumbnail/config.yml:/opt/ms/conf/config.yaml:ro"
 
   omeroimageregion:
     # omero-ms-image-region 0.5.2
@@ -94,8 +94,8 @@ services:
     networks:
       - omero
     volumes:
-      - "$PWD/imageregion/config.yml:/opt/ms/conf/config.yaml:ro"
-#      - "$PWD/imageregion/logback-debug.xml:/opt/ms/conf/logback-debug.xml:ro"
+      - "./imageregion/config.yml:/opt/ms/conf/config.yaml:ro"
+#      - "./imageregion/logback-debug.xml:/opt/ms/conf/logback-debug.xml:ro"
       - "omero:/OMERO"
       - "omeroscripts:/opt/omero/server/OMERO.server/lib/scripts"
 
@@ -107,7 +107,7 @@ services:
     ports:
       - "10080:80"
     volumes:
-      - "$PWD/caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
+      - "./caddy/Caddyfile:/etc/caddy/Caddyfile:ro"
 
 networks:
   omero:
@@ -120,4 +120,14 @@ volumes:
       type: none
       device: ./database
   omero:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./omero
   omeroscripts:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./omeroscripts
